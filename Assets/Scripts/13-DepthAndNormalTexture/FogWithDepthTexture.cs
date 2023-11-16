@@ -33,7 +33,6 @@ public class FogWithDepthTexture : PostEffectsBase
     }
 
     private Transform _myCameraTransform;
-
     public Transform cameraTransform
     {
         get
@@ -50,8 +49,7 @@ public class FogWithDepthTexture : PostEffectsBase
     public Color fogColor = Color.white;                 // 控制雾效的颜色
     public float fogStart = 0.0f;                        // 控制雾效的起始高度
     public float fogEnd = 2.0f;                          // 控制雾效的终止高度
-    
-    
+
     /// <summary>
     /// 调用时会检查材质是否可用，如果可用就把参数传递给材质，再调用Graphics.Blit进行处理，否则，直接把原图像显示到屏幕上，不做任何处理
     /// </summary>
