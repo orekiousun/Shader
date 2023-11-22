@@ -59,7 +59,6 @@ Shader "MyShader/07-Texture/SingleTexture"
 
             fixed4 frag (v2f f) : SV_Target
             {
-                
                 fixed3 worldNormal = normalize(f.worldNormal);                                                           // 获取顶点法线在世界空间的坐标
                 fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(f.worldPos));                                   // 获取光源的方向
                 fixed3 viewDir = normalize(UnityWorldSpaceViewDir(f.worldPos));                                          // 获取视线方向
