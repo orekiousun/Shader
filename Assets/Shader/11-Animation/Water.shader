@@ -67,5 +67,5 @@ Shader "MyShader/11-Animation/Water" {
             ENDCG
         }
     }
-    Fallback "Transparent/VertexLit"
+    FallBack "Transparent/VertexLit"
 }

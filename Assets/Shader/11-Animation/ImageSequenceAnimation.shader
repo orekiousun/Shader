@@ -61,5 +61,5 @@ Shader "MyShader/11-Animation/ImageSequenceAnimation" {
             ENDCG
         }
     }
-    Fallback "Transparent/VertexLit"
+    FallBack "Transparent/VertexLit"
 }

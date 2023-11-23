@@ -75,5 +75,5 @@ Shader "MyShader/11-Animation/Billboard" {
             ENDCG
         }
     }
-    Fallback "Transparent/VertexLit"
+    FallBack "Transparent/VertexLit"
 }

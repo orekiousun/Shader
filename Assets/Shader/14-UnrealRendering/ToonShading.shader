@@ -12,6 +12,8 @@
     }
     SubShader
     {   
+        Tags { "RenderType"="Opaque" "Queue"="Geometry"}
+        // 渲染轮廓线的Pass
         Pass
         {
             NAME "OUTLINE"  // 定义Pass的名称，方便复用
@@ -33,7 +35,6 @@
             struct v2f
             {
                 float4 pos : SV_POSITION;
-                float4 uv : TEXCOORD0;
             };
 
             v2f vert(a2v v)
@@ -53,6 +54,8 @@
             }
             ENDCG
         }
+        
+        // 光照模型的Pass
         Pass
         {
             Tags {"LightMode" = "ForwardBase"}
@@ -66,13 +69,12 @@
             #include "Lighting.cginc"
             #include "AutoLight.cginc"
             #include "UnityCG.cginc"
+            #include "UnityShaderVariables.cginc"
 
             fixed4 _Color;
             sampler2D _MainTex;
             float4 _MainTex_ST;
             sampler2D _Ramp;
-            float _Outline;
-            fixed4 _OutlineColor;
             fixed4 _Specular;
             float _SpecularScale;
 
@@ -134,5 +136,5 @@
             ENDCG
         }
     }
-    Fallback "Diffuse"
+    FallBack "Diffuse"
 }

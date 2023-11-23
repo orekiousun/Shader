@@ -57,5 +57,5 @@ Shader "MyShader/11-Animation/ScrollingBackground" {
             ENDCG
         }
     }
-    Fallback "VertexLit"
+    FallBack "VertexLit"
 }

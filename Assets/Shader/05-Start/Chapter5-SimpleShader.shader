@@ -1,8 +1,8 @@
-Shader "MyShader/05-SimpleShader"   // ¶¨ÒåShderÃû×Ö
+Shader "MyShader/05-SimpleShader"   // å®šä¹‰Shderåå­—
 {
     Properties
     {
-        // ÉùÃ÷Ò»¸öcolorÀàĞÍµÄÊôĞÔ
+        // å£°æ˜ä¸€ä¸ªcolorç±»å‹çš„å±æ€§
         _Color ("Color Tint", Color) = (1.0, 1.0, 1.0, 1.0)
     }
     SubShader  
@@ -13,7 +13,7 @@ Shader "MyShader/05-SimpleShader"   // ¶¨ÒåShderÃû×Ö
             #pragma vertex vert
             #pragma fragment frag
 
-            fixed4 _Color;   // CGÖĞĞèÒª¶¨ÒåÒ»¸öÊôĞÔºÍÃû³Æ¶¼Æ¥ÅäµÄ±äÁ¿
+            fixed4 _Color;   // CGä¸­éœ€è¦å®šä¹‰ä¸€ä¸ªå±æ€§å’Œåç§°éƒ½åŒ¹é…çš„å˜é‡
 
             struct a2v
             {
@@ -39,7 +39,7 @@ Shader "MyShader/05-SimpleShader"   // ¶¨ÒåShderÃû×Ö
             fixed4 frag(v2f i): SV_Target
             {
                 fixed3 c = i.myColor;
-                // Ê¹ÓÃColorÊôĞÔÀ´¿ØÖÆÊä³öÑÕÉ«
+                // ä½¿ç”¨Colorå±æ€§æ¥æ§åˆ¶è¾“å‡ºé¢œè‰²
                 c *= _Color.rgb;
                 return fixed4(c, 1.0);
             }
