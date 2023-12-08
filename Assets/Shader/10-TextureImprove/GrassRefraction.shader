@@ -80,7 +80,7 @@ Shader "MyShader/10-TextureImprove/GrassRefraction" {
 				float3 worldPos = float3(f.TtoW0.w, f.TtoW1.w, f.TtoW2.w);                                         // 通过w分量获取世界坐标
 				fixed3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
 				 
-				fixed3 bump = UnpackNormal(tex2D(_BumpMap, f.uv.zw));                                              // 对法线纹理采样，得到切线空间下的法线方向
+				fixed3 bump = UnpackNormal(tex2D(_BumpMap, f.uv.zw));                                 // 对法线纹理采样，得到切线空间下的法线方向
 				float2 offset = bump.xy * _Distortion * _RefractionTex_TexelSize.xy;   
 				f.srcPos.xy = offset + f.srcPos.xy;                                                                // 对屏幕图像的采样坐标进行偏移，模拟折射效果，_Distortion越大偏移量越大
 				fixed3 refrColor = tex2D(_RefractionTex, f.srcPos.xy/f.srcPos.w).rgb;                              // 对srcPos透视除法得到真正的屏幕坐标，再使用该坐标对抓取的屏幕图像进行采样，得到模拟的折射颜色
