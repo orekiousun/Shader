@@ -37,7 +37,7 @@ public class FogWithNoise : PostEffectsBase
     {
         get
         {
-            if (_myCamera == null)
+            if (_myCameraTransform == null)
             {
                 _myCameraTransform = camera.transform;
             }
@@ -65,7 +65,6 @@ public class FogWithNoise : PostEffectsBase
         {
             Matrix4x4 frustumCorners = Matrix4x4.identity;
             
-            // 
             float fov = camera.fieldOfView;
             float near = camera.nearClipPlane;
             float aspect = camera.aspect;
@@ -92,6 +91,7 @@ public class FogWithNoise : PostEffectsBase
             bottomRight.Normalize();
             bottomRight *= scale;
 			
+            // 计算近裁剪平面四个角对应的向量，并把它们存储在一个矩阵中
             frustumCorners.SetRow(0, bottomLeft);
             frustumCorners.SetRow(1, bottomRight);
             frustumCorners.SetRow(2, topRight);
