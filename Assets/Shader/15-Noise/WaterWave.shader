@@ -5,7 +5,7 @@
         _Color ("Main Color", Color) = (0, 0.15, 0.115, 1)              // 控制水面颜色
         _MainTex ("Base (RGB)", 2D) = "white" {}                        // 水面材质纹理
         _WaveMap ("Wave Map", 2D) = "bump" {}                           // 由噪声纹理生成的法线纹理
-        _CubeMap ("Environment Cubemap", Cube) = "_SkyBox" { }          // 用于模拟反射的立方体纹理
+        _CubeMap ("Environment Cubemap", Cube) = "_Skybox" { }          // 用于模拟反射的立方体纹理
         _WaveXSpeed ("Wave Horizontal Speed", Range(-0.1, 0.1)) = 0.01  // 控制法线在X方向上的平移速度 
         _WaveYSpeed ("Wave Vertical Speed", Range(-0.1, 0.1)) = 0.01    // 控制法线在Y方向上的平移速度
         _Distortion ("Distortion", Range(0, 100)) = 10
@@ -24,12 +24,11 @@
             Tags { "LightMode"="ForwardBase" }
 
             CGPROGRAM
+            #include "UnityCG.cginc"
+			#include "Lighting.cginc"
+            #pragma multi_compile_fwdbase
             #pragma vertex vert
 			#pragma fragment frag
-            #pragma multi_compile_fwdbase
-			
-			#include "UnityCG.cginc"
-			#include "AutoLight.cginc"
             
             fixed4 _Color;
             sampler2D _MainTex;
@@ -69,7 +68,7 @@
                 o.uv.xy = TRANSFORM_TEX(v.texcoord, _MainTex);  
                 o.uv.zw = TRANSFORM_TEX(v.texcoord, _WaveMap);  // 计算两个纹理的采样坐标
 
-                float3 worldPos = UnityObjectToWorldDir(v.vertex);
+                float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
                 fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
                 fixed3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
                 fixed3 worldBinormal = cross(worldNormal, worldTangent) * v.tangent.w;
@@ -98,8 +97,8 @@
                 fixed3 refrCol = tex2D(_RefractionTex, i.scrPos.xy / i.scrPos.w).rgb;                             // 使用透视除法，并对_RefractionTex进行采样，得到模拟的折射颜色
 
                 bump = normalize(half3(dot(i.TtoW0.xyz, bump), dot(i.TtoW1.xyz, bump), dot(i.TtoW2.xyz, bump)));  // 将法线方向从切线空间变换到世界空间下
-                fixed3 reflDir = reflect(-viewDir, bump);                                                         // 得到视角方向相对于法线方向的反射方向
                 fixed4 texColor = tex2D(_MainTex, i.uv.xy + speed);                                               // 对主纹理进行纹理动画，模拟水波效果
+                fixed3 reflDir = reflect(-viewDir, bump);                                                         // 得到视角方向相对于法线方向的反射方向
                 fixed3 reflCol = texCUBE(_CubeMap, reflDir).rgb * texColor.rgb * _Color.rgb;                      // 使用反射方向对CubeMap进行采样，并把结果和主纹理颜色相乘后得到反射颜色
 
                 fixed fresnel = pow(1 - saturate(dot(viewDir, bump)), 4);                                         // 计算菲涅尔系数
